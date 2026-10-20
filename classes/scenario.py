@@ -43,7 +43,7 @@ class Scenario(object):
         self.process_time_ambulance_response = 20
         self.process_ambulance_on_scene_duration = 30
         self.process_time_arrival_to_needle = 30
-        self.transfer_time_delay = 60
+        self.transfer_time_delay = 90 # Note net delay is 60 mins as puncture time reduced
         self.process_time_arrival_to_puncture = 90
         self.process_time_transfer_arrival_to_puncture = 60
 
