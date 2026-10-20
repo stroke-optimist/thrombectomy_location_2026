@@ -11,6 +11,8 @@ Working/
 wip/
 WIP/
 processed_data/
+/output/
+/Output/
 
 # Ignore all checkpoints folders
 **/.ipynb_checkpoints/
