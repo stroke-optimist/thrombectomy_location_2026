@@ -1,0 +1,26 @@
+_build/
+
+# Folders to ignore
+temp/
+Temp/
+test/
+Test/
+.vscode/
+working/
+Working/
+wip/
+WIP/
+processed_data/
+
+# Ignore all checkpoints folders
+**/.ipynb_checkpoints/
+
+# Ignore .pyc files
+*.pyc
+
+
+# Ignore cache files (stored in this folder)
+**/__pycache__/
+
+# Ignore insync files
+*.insyncdl
