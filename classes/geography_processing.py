@@ -10,7 +10,9 @@ class Geoprocessing(object):
     Processing of raw geographic data for model.
     """
 
-    def __init__(self, limit_to_england=False):
+    def __init__(self,
+                 limit_to_england=False,
+                 mt_travel_bias=3.0):
         """
         Initialise geographic class.
 
@@ -68,6 +70,7 @@ class Geoprocessing(object):
         """
 
         self.limit_to_england = limit_to_england
+        self.mt_travel_bias = mt_travel_bias
 
     def run(self):
         """
@@ -79,6 +82,7 @@ class Geoprocessing(object):
         self.find_nearest_transfer_mt_unit()
         self.collate_data()
         self.save_processed_data()
+        
 
     def collate_data(self):
         """
@@ -103,12 +107,24 @@ class Geoprocessing(object):
         # Limit data to hospitals providing IVT
         mask = self.hospitals['Use_IVT'] == 1
         self.IVT_hospitals = self.hospitals[mask]['Postcode'].tolist()
+        
         # Use only the travel times to IVT hospitals
         travel_matrix = self.lsoa_travel_time[self.IVT_hospitals]
-        # Find the value and index for the lowest travel time for each LSOA
+        
+        # Apply the MT travel bias when choosing the nearest IVT hospital.
+        adjusted_travel_matrix = travel_matrix.copy()
+        mt_hospitals = self.hospitals.loc[
+            self.hospitals['Use_MT'] == 1, 'Postcode']
+        mt_columns = travel_matrix.columns.intersection(mt_hospitals)
+        adjusted_travel_matrix.loc[:, mt_columns] -= self.mt_travel_bias
+
+        # Choose by adjusted time, but retain the actual travel time.
         self.nearest_ivt_unit = pd.DataFrame()
-        self.nearest_ivt_unit['unit'] = travel_matrix.idxmin(axis=1)
-        self.nearest_ivt_unit['time'] = travel_matrix.min(axis=1)
+        self.nearest_ivt_unit['unit'] = adjusted_travel_matrix.idxmin(axis=1)
+        column_positions = travel_matrix.columns.get_indexer(
+            self.nearest_ivt_unit['unit'])
+        self.nearest_ivt_unit['time'] = travel_matrix.to_numpy()[
+            list(range(len(travel_matrix))), column_positions]
 
     def find_nearest_mt_unit(self):
         """
@@ -176,6 +192,10 @@ class Geoprocessing(object):
         """
         Save combined data
         """
+
+        # Apply limit to England if required
+        if self.limit_to_england:
+            self.combined_data = self.combined_data[self.combined_data['England'] == 1] 
 
         # Reindex combined data
         self.combined_data.to_csv(

@@ -20,9 +20,6 @@ class Scenario(object):
         # Geography
         self.limit_to_england = True
 
-        # Allow travel bias to go direct to the nearest MT center (for testing purposes)
-        self.thrombectomy_travel_bias = 5
-
         # Stroke types
         # Proportions for 6 hour arrivals:
         # https://samuel-book.github.io/samuel-1/descriptive_stats/10_using_nihss_10_for_lvo.html
