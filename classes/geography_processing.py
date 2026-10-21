@@ -12,7 +12,8 @@ class Geoprocessing(object):
 
     def __init__(self,
                  limit_to_england=False,
-                 mt_travel_bias=3.0):
+                 mt_travel_bias=3.0,
+                 new_mt_centres=[]):
         """
         Initialise geographic class.
 
@@ -71,6 +72,7 @@ class Geoprocessing(object):
 
         self.limit_to_england = limit_to_england
         self.mt_travel_bias = mt_travel_bias
+        self.new_mt_centres = new_mt_centres
 
     def run(self):
         """
@@ -171,6 +173,11 @@ class Geoprocessing(object):
         """
         self.hospitals = pd.read_csv(
             './data/stroke_hospitals_2025.csv')
+
+        # If there are new MT centres, change the Use_MT column to 1 for those hospitals
+        if len(self.new_mt_centres) > 0 :
+            for new_mt_centre in self.new_mt_centres:
+                self.hospitals.loc[self.hospitals['Postcode'] == new_mt_centre, 'Use_MT'] = 1
         
         if self.limit_to_england:
             self.hospitals = self.hospitals[self.hospitals['Country'] == 'England']
@@ -204,8 +211,7 @@ class Geoprocessing(object):
 
         # Apply limit to England if required
         if self.limit_to_england:
-            self.combined_data = self.combined_data[self.combined_data['England'] == 1] 
-
-        # Reindex combined data
+            self.combined_data = self.combined_data[self.combined_data['England'] == 1]
+        
         self.combined_data.to_csv(
             './processed_data/processed_data.csv', index_label='LSOA')
