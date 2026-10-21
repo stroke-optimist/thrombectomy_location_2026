@@ -92,6 +92,8 @@ class Geoprocessing(object):
         self.combined_data = pd.DataFrame()
         self.combined_data['nearest_ivt_unit'] = self.nearest_ivt_unit['unit']
         self.combined_data['nearest_ivt_time'] = self.nearest_ivt_unit['time']
+        self.combined_data['nearest_ivt_unit_no_bias'] = self.nearest_ivt_unit['nearest_ivt_unit_no_bias']  
+        self.combined_data['nearest_ivt_time_no_bias'] = self.nearest_ivt_unit['nearest_ivt_time_no_bias']
         self.combined_data['nearest_mt_unit'] = self.nearest_mt_unit['unit']
         self.combined_data['nearest_mt_time'] = self.nearest_mt_unit['time']
         self.combined_data = self.combined_data.merge(
@@ -118,13 +120,20 @@ class Geoprocessing(object):
         mt_columns = travel_matrix.columns.intersection(mt_hospitals)
         adjusted_travel_matrix.loc[:, mt_columns] -= self.mt_travel_bias
 
-        # Choose by adjusted time, but retain the actual travel time.
+        # Choose by adjusted time.
         self.nearest_ivt_unit = pd.DataFrame()
         self.nearest_ivt_unit['unit'] = adjusted_travel_matrix.idxmin(axis=1)
         column_positions = travel_matrix.columns.get_indexer(
             self.nearest_ivt_unit['unit'])
-        self.nearest_ivt_unit['time'] = travel_matrix.to_numpy()[
+        self.nearest_ivt_unit['time'] = adjusted_travel_matrix.to_numpy()[
             list(range(len(travel_matrix))), column_positions]
+
+        # Store the nearest IVT unit and time without the MT travel bias for reference
+        self.nearest_ivt_unit['nearest_ivt_unit_no_bias'] = travel_matrix.idxmin(axis=1)
+        column_positions_no_bias = travel_matrix.columns.get_indexer(
+            self.nearest_ivt_unit['nearest_ivt_unit_no_bias'])
+        self.nearest_ivt_unit['nearest_ivt_time_no_bias'] = travel_matrix.to_numpy()[
+            list(range(len(travel_matrix))), column_positions_no_bias]
 
     def find_nearest_mt_unit(self):
         """
