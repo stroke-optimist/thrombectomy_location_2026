@@ -12,7 +12,7 @@ class Geoprocessing(object):
 
     def __init__(self,
                  limit_to_england=False,
-                 mt_travel_bias=3.0,
+                 mt_travel_bias=1.0,
                  new_mt_centres=[]):
         """
         Initialise geographic class.
