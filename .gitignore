@@ -26,3 +26,6 @@ processed_data/
 
 # Ignore insync files
 *.insyncdl
+
+# Ignore lock files
+.~lock*
