@@ -28,8 +28,8 @@ def add_net_benefit(df, prop_lvo=0.3):
     # Get mRS 0-2 improvements
     df['nlvo_drip_ship_ivt_improvement_over_no_treatment'] = \
         df['nlvo_drip_ship_ivt_mrs_0-2'] - df['nlvo_no_treatment_mrs_0-2']
-    df['lvo_drip_ship_ivt_improvement_over_no_treatment'] = \
-        df['lvo_drip_ship_ivt_mrs_0-2'] - df['lvo_no_treatment_mrs_0-2']
+    df['lvo_drip_ship_ivt_mt_improvement_over_no_treatment'] = \
+        df['lvo_drip_ship_ivt_mt_mrs_0-2'] - df['lvo_no_treatment_mrs_0-2']
 
     # Get proportions mRS 0-2 for each scenario
     df['no_treatment_mrs_0-2'] = (
@@ -38,7 +38,7 @@ def add_net_benefit(df, prop_lvo=0.3):
 
     df['drip_ship_mrs_0-2'] = (
         (df['nlvo_drip_ship_ivt_mrs_0-2'] * prop_nlvo) +
-        (df['lvo_drip_ship_mt_mrs_0-2'] * prop_lvo))
+        (df['lvo_drip_ship_ivt_mt_mrs_0-2'] * prop_lvo))
 
     df['drip_ship_mrs_0-2_improvement_over_no_treatment'] = \
         df['drip_ship_mrs_0-2'] - df['no_treatment_mrs_0-2']
