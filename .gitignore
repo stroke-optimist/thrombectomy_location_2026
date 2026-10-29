@@ -11,8 +11,8 @@ Working/
 wip/
 WIP/
 processed_data/
-/output/
-/Output/
+#/output/
+#/Output/
 
 # Ignore to_do files
 to_do.txt

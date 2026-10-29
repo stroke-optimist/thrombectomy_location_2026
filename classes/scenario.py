@@ -35,8 +35,9 @@ class Scenario(object):
         # Treatment proportions; Gives 20% IVT and 15% MT with above proportions
         self.prop_nlvo_treated_with_ivt = 0.16
         self.prop_nlvo_treated_with_mt = 0.0
-        self.prop_lvo_treated_with_ivt = 0.40
-        self.prop_lvo_treated_with_mt = 0.60
+        # Model treated LVO
+        self.prop_lvo_treated_with_ivt = 4/6  # 0.40
+        self.prop_lvo_treated_with_mt = 1.0 # 0.60
 
         # Process times
         self.process_time_call_ambulance = 30
