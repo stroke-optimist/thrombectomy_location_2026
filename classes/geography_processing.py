@@ -116,7 +116,7 @@ class Geoprocessing(object):
         travel_matrix = self.lsoa_travel_time[self.IVT_hospitals]
         
         # Apply the MT travel bias when choosing the nearest IVT hospital.
-        adjusted_travel_matrix = travel_matrix.copy()
+        adjusted_travel_matrix = travel_matrix.copy().astype(float)
         mt_hospitals = self.hospitals.loc[
             self.hospitals['Use_MT'] == 1, 'Postcode']
         mt_columns = travel_matrix.columns.intersection(mt_hospitals)
