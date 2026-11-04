@@ -81,6 +81,10 @@ class Model(object):
             self.scenario.transfer_time_delay +
             self.full_results['transfer_time'] +
             self.scenario.process_time_transfer_arrival_to_puncture)
+
+        self.full_results['drip_ship_mt_travel_time'] = (
+            self.full_results['nearest_ivt_time'] +
+            self.full_results['transfer_time'])
      
         # Add clinical benefit for nLVO outcome (stroke type = 1)
         # Set up input table for stroke outcome package
