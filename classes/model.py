@@ -84,7 +84,7 @@ class Model(object):
 
         self.full_results['drip_ship_mt_travel_time'] = (
             self.full_results['nearest_ivt_time'] +
-            self.scenario.process_MT_net_delay +
+            (self.full_results['transfer_required'] * self.scenario.process_MT_net_delay) +
             self.full_results['transfer_time'])
      
         # Add clinical benefit for nLVO outcome (stroke type = 1)
