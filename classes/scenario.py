@@ -47,6 +47,8 @@ class Scenario(object):
         self.transfer_time_delay = 90 # Note net delay is 60 mins as puncture time reduced
         self.process_time_arrival_to_puncture = 90
         self.process_time_transfer_arrival_to_puncture = 60
+        self.process_MT_net_delay = self.transfer_time_delay - (
+                self.process_time_arrival_to_puncture - self.process_time_transfer_arrival_to_puncture)
 
         # Save options
         self.save_lsoa_results = False
