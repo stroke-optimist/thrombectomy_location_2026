@@ -78,9 +78,9 @@ class Model(object):
             self.scenario.process_time_ambulance_response +
             self.scenario.process_ambulance_on_scene_duration +
             self.full_results['nearest_ivt_time'] +
-            self.scenario.transfer_time_delay +
+            (self.full_results['transfer_required'] * self.scenario.process_MT_net_delay) +
             self.full_results['transfer_time'] +
-            self.scenario.process_time_transfer_arrival_to_puncture)
+            self.scenario.process_time_arrival_to_puncture)
 
         self.full_results['drip_ship_mt_travel_time'] = (
             self.full_results['nearest_ivt_time'] +
