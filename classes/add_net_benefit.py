@@ -1,6 +1,6 @@
 import pandas as pd
 
-def add_net_benefit(df, prop_lvo=0.3, prop_lvo_ds_mt=1.0):
+def add_net_benefit(df, prop_lvo=0.3):
     """
     Add net benefit column to the dataframe.
 
@@ -21,10 +21,10 @@ def add_net_benefit(df, prop_lvo=0.3, prop_lvo_ds_mt=1.0):
     Returns:
     pd.DataFrame: DataFrame with added net benefit columns.
     """
+    cols_start = df.columns
 
     prop_nlvo = 1 - prop_lvo
 
-    m_ds = df['transfer_required'] == True
 
     # Utility and proportions mRS 0-2 for each scenario
     for s in ['utility_shift', 'mrs_0-2']:
@@ -32,14 +32,6 @@ def add_net_benefit(df, prop_lvo=0.3, prop_lvo_ds_mt=1.0):
         df[f'drip_ship_{s}'] = (
             (df[f'nlvo_drip_ship_ivt_{s}'] * prop_nlvo) +
             (df[f'lvo_drip_ship_ivt_mt_{s}'] * prop_lvo)
-        )
-        # Scale for patients who don't get a transfer for MT:
-        df.loc[m_ds, f'drip_ship_{s}'] = (
-            (df.loc[m_ds, f'nlvo_drip_ship_ivt_{s}'] * prop_nlvo) +
-            (df.loc[m_ds, f'lvo_drip_ship_ivt_mt_{s}'] *
-             prop_lvo * prop_lvo_ds_mt) +
-            (df.loc[m_ds, f'lvo_drip_ship_ivt_{s}'] *
-             prop_lvo * (1.0 - prop_lvo_ds_mt))
         )
 
         df[f'mothership_{s}'] = (
@@ -63,14 +55,49 @@ def add_net_benefit(df, prop_lvo=0.3, prop_lvo_ds_mt=1.0):
             df[f'{o}_drip_ship_{t}_mrs_0-2'] -
             df[f'{o}_no_treatment_mrs_0-2']
         )
-    # Accounting for not all drip-ship patients getting a transfer:
+
+    return df
+
+
+def add_lossy_net_benefit(df, prop_lvo=0.3, prop_lvo_ds_mt=1.0):
+    """
+    # Accounting for not all drip-ship patients getting a transfer.
+
+    prop_lvo_ds_mt is proportion that get transfer.
+    """
+    if prop_lvo_ds_mt == 1.0:
+        return df
+    else:
+        pass
+
+    cols_start = df.columns
+
+    prop_nlvo = 1 - prop_lvo
+
+    p = f'{prop_lvo_ds_mt}'.replace('.', '!')  # no . in column names.
+
+    m_ds = df['transfer_required'] == True
+
+    for s in ['utility_shift', 'mrs_0-2']:
+        # Scale for patients who don't get a transfer for MT:
+        n = f'drip_ship_transfer{p}_{s}'
+        df[n] = df[f'drip_ship_{s}'].copy()
+        df.loc[m_ds, n] = (
+            (df.loc[m_ds, f'nlvo_drip_ship_ivt_{s}'] * prop_nlvo) +
+            (df.loc[m_ds, f'lvo_drip_ship_ivt_mt_{s}'] *
+             prop_lvo * prop_lvo_ds_mt) +
+            (df.loc[m_ds, f'lvo_drip_ship_ivt_{s}'] *
+             prop_lvo * (1.0 - prop_lvo_ds_mt))
+        )
+
     s = 'improvement_over_no_treatment'
-    df[f'lvo_drip_ship_lossy_ivt_mt_{s}'] = (
-        df[f'lvo_drip_ship_ivt_mt_{s}'].copy())
-    df.loc[m_ds, f'lvo_drip_ship_lossy_ivt_mt_{s}'] = (
+    n = f'lvo_drip_ship_transfer{p}_ivt_mt_{s}'
+    df[n] = df[f'lvo_drip_ship_ivt_mt_{s}'].copy()
+    df.loc[m_ds, n] = (
         (df.loc[m_ds, f'lvo_drip_ship_ivt_mt_{s}'] * prop_lvo_ds_mt) +
         (df.loc[m_ds, f'lvo_drip_ship_ivt_{s}'] * (1.0 - prop_lvo_ds_mt))
     )
 
-
+    cols_new = list(set(df.columns) - set(cols_start))
+    df[cols_new] = df[cols_new].round(5)
     return df

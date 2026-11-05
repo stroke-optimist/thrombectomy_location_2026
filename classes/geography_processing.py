@@ -83,7 +83,7 @@ class Geoprocessing(object):
         self.find_nearest_mt_unit()
         self.find_nearest_transfer_mt_unit()
         self.collate_data()
-        self.save_processed_data()
+        # self.save_processed_data()
         
 
     def collate_data(self):
@@ -102,6 +102,9 @@ class Geoprocessing(object):
             self.transfer_mt_unit, how='left', left_on='nearest_ivt_unit', right_index=True)
         self.combined_data = self.combined_data.merge(
             self.admissions, how='left', left_index=True, right_index=True)
+        # Apply limit to England if required
+        if self.limit_to_england:
+            self.combined_data = self.combined_data[self.combined_data['England'] == 1]
 
     def find_nearest_ivt_unit(self):
         """
