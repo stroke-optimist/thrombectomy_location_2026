@@ -51,7 +51,7 @@ def add_net_benefit(df, prop_lvo=0.3):
 
     # By occlusion-treatment pair:
     for (o, t) in [('nlvo', 'ivt'), ('lvo', 'ivt'), ('lvo', 'ivt_mt')]:
-        df[f'{o}_drip_ship_{t}_improvement_over_no_treatment'] = (
+        df[f'{o}_drip_ship_{t}_mrs_0-2_improvement_over_no_treatment'] = (
             df[f'{o}_drip_ship_{t}_mrs_0-2'] -
             df[f'{o}_no_treatment_mrs_0-2']
         )
@@ -71,14 +71,28 @@ def add_lossy_net_benefit(df, prop_lvo=0.3, prop_lvo_ds_mt=1.0):
         pass
 
     cols_start = df.columns
-
     prop_nlvo = 1 - prop_lvo
-
     p = f'{prop_lvo_ds_mt}'.replace('.', '!')  # no . in column names.
-
     m_ds = df['transfer_required'] == True
+    outcome_columns = ['utility_shift', 'mrs_0-2',
+                       'mrs_0-2_improvement_over_no_treatment']  # 'mrs_shift', 'utility'
 
-    for s in ['utility_shift', 'mrs_0-2']:
+    
+    for s in ['mrs_0-2']:  # outcome_columns:
+        n = f'lvo_drip_ship_transfer{p}_ivt_mt_{s}'
+        df[n] = df[f'lvo_drip_ship_ivt_mt_{s}'].copy()
+        df.loc[m_ds, n] = (
+            (df.loc[m_ds, f'lvo_drip_ship_ivt_mt_{s}'] * prop_lvo_ds_mt) +
+            (df.loc[m_ds, f'lvo_drip_ship_ivt_{s}'] * (1.0 - prop_lvo_ds_mt))
+        )
+        n = f'lvo_drip_ship_transfer{p}_mt_{s}'
+        df[n] = df[f'lvo_drip_ship_mt_{s}'].copy()
+        df.loc[m_ds, n] = (
+            (df.loc[m_ds, f'lvo_drip_ship_mt_{s}'] * prop_lvo_ds_mt) +
+            (df.loc[m_ds, f'lvo_no_treatment_{s}'] * (1.0 - prop_lvo_ds_mt))
+        )
+
+    for s in outcome_columns:
         # Scale for patients who don't get a transfer for MT:
         n = f'drip_ship_transfer{p}_{s}'
         df[n] = df[f'drip_ship_{s}'].copy()
@@ -90,7 +104,7 @@ def add_lossy_net_benefit(df, prop_lvo=0.3, prop_lvo_ds_mt=1.0):
              prop_lvo * (1.0 - prop_lvo_ds_mt))
         )
 
-    s = 'improvement_over_no_treatment'
+    s = 'mrs_0-2_improvement_over_no_treatment'
     n = f'lvo_drip_ship_transfer{p}_ivt_mt_{s}'
     df[n] = df[f'lvo_drip_ship_ivt_mt_{s}'].copy()
     df.loc[m_ds, n] = (
