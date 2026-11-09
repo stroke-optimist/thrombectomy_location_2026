@@ -29,7 +29,6 @@ def add_net_benefit(df, prop_lvo=0.3, prop_lvo_ds_mt=1.0):
                        'mrs_0-2_improvement_over_no_treatment']  # 'mrs_shift', 'utility'
     use_mt_only = 0
 
-
     df['no_treatment_mrs_0-2'] = (
         (df['nlvo_no_treatment_mrs_0-2'] * prop_nlvo) +
         (df['lvo_no_treatment_mrs_0-2'] * prop_lvo)
@@ -103,22 +102,42 @@ def add_net_benefit(df, prop_lvo=0.3, prop_lvo_ds_mt=1.0):
     return df
 
 
-# def add_lossy_net_benefit(df, prop_lvo=0.3, prop_lvo_ds_mt=1.0):
-#     """
-#     # Accounting for not all drip-ship patients getting a transfer.
+def add_mt_and_transfers(df, col_admissions, mt_rate, prop_lvo_ds_mt=1.0):
+    """
+    Calculate numbers of MT and transfers.
 
-#     prop_lvo_ds_mt is proportion that get transfer.
-#     """
-#     if prop_lvo_ds_mt == 1.0:
-#         return df
-#     else:
-#         pass
+    Numbers of MT is just a simple scaling of all admissions.
+    Numbers of transfers depend on the loss rate in the drip-and-ship
+    case, and are zero when the first unit provides MT.
+    """
+    s = '' if prop_lvo_ds_mt == 1.0 else f'_transferloss'
+    col_new_ad = f'admissions_mt{s}'
+    col_new_tr = f'transfers_mt{s}'
+    
+    m = df['transfer_required']
+    # Start with everybody receiving MT:
+    df[col_new_ad] = df[col_admissions] * mt_rate
+    # Account for drip-and-ship transfer loss:
+    if prop_lvo_ds_mt != 1.0:
+        df.loc[m, col_new_ad] *= prop_lvo_ds_mt
 
-#     cols_start = df.columns
-#     prop_nlvo = 1 - prop_lvo
-#     p = f'{prop_lvo_ds_mt}'.replace('.', '!')  # no . in column names.
-#     m_ds = df['transfer_required'] == True
-#     outcome_columns = ['utility_shift', 'mrs_0-2',
-#                        'mrs_0-2_improvement_over_no_treatment']  # 'mrs_shift', 'utility'
+    # If the first unit offers MT, set transfers to zero:
+    df[col_new_tr] = df[col_new_ad].copy()
+    df.loc[~m, col_new_tr] = 0.0
 
-#     return df
+    df[[col_new_ad, col_new_tr]] = df[[col_new_ad, col_new_tr]].round(3)
+    return df
+
+
+def add_admissions_weighted_outcomes(
+            df, col_admissions, cols_outcome):
+    """LSOA-level"""
+    list_weighted_outcomes = []
+    for col in cols_outcome:
+        s = df[col] * df[col_admissions]
+        s = s.rename(f'admissions_weighted_{col}')
+        list_weighted_outcomes.append(s)
+
+    df = pd.concat([df] + list_weighted_outcomes, axis='columns')
+    df = df.round(5)
+    return df
