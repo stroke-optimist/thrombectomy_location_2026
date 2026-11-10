@@ -1,8 +1,8 @@
-nearest_ivt_unit_base,nearest_ivt_unit_taunworc,transfer_unit_base,transfer_unit_taunworc,admissions_mt_base,admissions_mt_transferloss0!6_base
-Barnstaple,Barnstaple,Plymouth,Taunton,46.7,28.0
-Exeter,Exeter,Plymouth,Taunton,62.9,37.7
-Dorchester,Dorchester,Southampton,Taunton,69.7,41.8
+nearest_ivt_unit_base,nearest_ivt_unit_taunworc,transfer_unit_base,transfer_unit_taunworc,admissions_mt_base,admissions_mt_transferloss0!67_base
+Barnstaple,Barnstaple,Plymouth,Taunton,46.7,31.3
+Exeter,Exeter,Plymouth,Taunton,62.9,42.1
+Dorchester,Dorchester,Southampton,Taunton,69.7,46.7
 Dorchester,Taunton,Southampton,Taunton,0.6,0.4
-Cheltenham,Cheltenham,North Bristol,Worcester,79.8,47.9
-Hereford,Hereford,Birmingham,Worcester,51.7,31.0
+Cheltenham,Cheltenham,North Bristol,Worcester,79.8,53.4
+Hereford,Hereford,Birmingham,Worcester,51.7,34.6
 Dudley,Worcester,Birmingham,Worcester,0.5,0.3
