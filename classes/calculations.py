@@ -1,3 +1,4 @@
+""""""
 def calculate_extra_bits(df, scenarios):
     """
     Note that we're missing some of these things calculated for LSOA-level data:
