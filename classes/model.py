@@ -73,6 +73,10 @@ class Model(object):
             self.full_results['nearest_ivt_time'] +
             self.scenario.process_time_arrival_to_needle)
 
+        # If transfer is required, add the MT net delay.
+        # If no transfer required, instead add the arrival to puncture
+        # time. Assume time save due to some treatment given at first
+        # unit.
         self.full_results['drip_ship_mt_time'] = (
             self.scenario.process_time_call_ambulance +
             self.scenario.process_time_ambulance_response +
@@ -80,12 +84,15 @@ class Model(object):
             self.full_results['nearest_ivt_time'] +
             (self.full_results['transfer_required'] * self.scenario.process_MT_net_delay) +
             self.full_results['transfer_time'] +
-            self.scenario.process_time_arrival_to_puncture)
+            ((1.0 - self.full_results['transfer_required']) *
+             self.scenario.process_time_arrival_to_puncture)
+        )
 
+        # This is just time on the road, not time waiting for transfer.
         self.full_results['drip_ship_mt_travel_time'] = (
             self.full_results['nearest_ivt_time'] +
-            (self.full_results['transfer_required'] * self.scenario.process_MT_net_delay) +
-            self.full_results['transfer_time'])
+            self.full_results['transfer_time']
+        )
      
         # Add clinical benefit for nLVO outcome (stroke type = 1)
         # Set up input table for stroke outcome package
