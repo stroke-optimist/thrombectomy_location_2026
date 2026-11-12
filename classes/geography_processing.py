@@ -131,7 +131,7 @@ class Geoprocessing(object):
         column_positions = travel_matrix.columns.get_indexer(
             self.nearest_ivt_unit['unit'])
         self.nearest_ivt_unit['time'] = adjusted_travel_matrix.to_numpy()[
-            list(range(len(travel_matrix))), column_positions]
+            list(range(len(travel_matrix))), column_positions] + self.mt_travel_bias
 
         # Store the nearest IVT unit and time without the MT travel bias for reference
         self.nearest_ivt_unit['nearest_ivt_unit_no_bias'] = travel_matrix.idxmin(axis=1)
