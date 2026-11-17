@@ -124,21 +124,26 @@ class Geoprocessing(object):
             self.hospitals['Use_MT'] == 1, 'Postcode']
         mt_columns = travel_matrix.columns.intersection(mt_hospitals)
         adjusted_travel_matrix.loc[:, mt_columns] -= self.mt_travel_bias
+        adjusted_travel_matrix = adjusted_travel_matrix.round(1)
 
         # Choose by adjusted time.
         self.nearest_ivt_unit = pd.DataFrame()
         self.nearest_ivt_unit['unit'] = adjusted_travel_matrix.idxmin(axis=1)
         column_positions = travel_matrix.columns.get_indexer(
             self.nearest_ivt_unit['unit'])
-        self.nearest_ivt_unit['time'] = adjusted_travel_matrix.to_numpy()[
-            list(range(len(travel_matrix))), column_positions] + self.mt_travel_bias
+        # Store time without bias:
+        self.nearest_ivt_unit['time'] = travel_matrix.to_numpy()[
+            list(range(len(travel_matrix))), column_positions]
 
-        # Store the nearest IVT unit and time without the MT travel bias for reference
-        self.nearest_ivt_unit['nearest_ivt_unit_no_bias'] = travel_matrix.idxmin(axis=1)
+        # Store the nearest IVT unit and time
+        # without the MT travel bias for reference
+        self.nearest_ivt_unit['nearest_ivt_unit_no_bias'] = (
+            travel_matrix.idxmin(axis=1))
         column_positions_no_bias = travel_matrix.columns.get_indexer(
             self.nearest_ivt_unit['nearest_ivt_unit_no_bias'])
         self.nearest_ivt_unit['nearest_ivt_time_no_bias'] = travel_matrix.to_numpy()[
             list(range(len(travel_matrix))), column_positions_no_bias]
+
 
     def find_nearest_mt_unit(self):
         """
@@ -176,6 +181,8 @@ class Geoprocessing(object):
         """
         self.hospitals = pd.read_csv(
             './data/stroke_hospitals_2025.csv')
+        # Make sure hospitals are alphabetical by postcode:
+        self.hospitals = self.hospitals.sort_values('Postcode')
 
         # If there are new MT centres, change the Use_MT column to 1 for those hospitals
         if len(self.new_mt_centres) > 0 :

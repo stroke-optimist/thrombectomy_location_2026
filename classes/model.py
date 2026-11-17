@@ -74,24 +74,37 @@ class Model(object):
             self.scenario.process_time_arrival_to_needle)
 
         # If transfer is required, add the MT net delay.
+        # This is combined door-in-door-out time at first unit
+        # and a reduction in arrival-to-puncture at second unit
+        # due to some work already done at first unit.
         # If no transfer required, instead add the arrival to puncture
-        # time. Assume time save due to some treatment given at first
-        # unit.
+        # time.
         self.full_results['drip_ship_mt_time'] = (
             self.scenario.process_time_call_ambulance +
             self.scenario.process_time_ambulance_response +
             self.scenario.process_ambulance_on_scene_duration +
             self.full_results['nearest_ivt_time'] +
-            (self.full_results['transfer_required'] * self.scenario.process_MT_net_delay) +
-            self.full_results['transfer_time'] +
-            ((1.0 - self.full_results['transfer_required']) *
-             self.scenario.process_time_arrival_to_puncture)
+            self.scenario.process_time_arrival_to_puncture +
+            # Add these times if a transfer is required...
+            (self.full_results['transfer_required'] * (
+                self.scenario.process_MT_net_delay +
+                self.full_results['transfer_time']))
         )
 
         # This is just time on the road, not time waiting for transfer.
         self.full_results['drip_ship_mt_travel_time'] = (
             self.full_results['nearest_ivt_time'] +
-            self.full_results['transfer_time']
+            # Add these times if a transfer is required.
+            (self.full_results['transfer_required'] * (
+                self.full_results['transfer_time']))
+        )
+        # This is time on the road and time waiting for transfer.
+        self.full_results['drip_ship_mt_travel_time_with_delay'] = (
+            self.full_results['nearest_ivt_time'] +
+            # Add these times if a transfer is required.
+            (self.full_results['transfer_required'] * (
+                self.scenario.process_MT_net_delay +
+                self.full_results['transfer_time']))
         )
      
         # Add clinical benefit for nLVO outcome (stroke type = 1)
