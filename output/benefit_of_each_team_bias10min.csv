@@ -1,0 +1,74 @@
+SSNAP name,Hospital_City,Hospital,Weighted Net Benefit,Admission Catchment benefitting,Mean Benefit for Those Benefitting,Relative Benefit,Weighted Net Benefit (0!67 transferred),Admission Catchment benefitting (0!67 transferred),Mean Benefit for Those Benefitting (0!67 transferred),Relative Benefit (0!67 transferred)
+Frimley Park Hospital,Frimley Park,GU167UJ,0.00119,2690.9,0.04001,1.0,0.00145,2690.9,0.04834,1.0
+Luton and Dunstable Hospital,Luton and Dunstable,LU40DZ,0.00116,3834.4,0.02741,0.975,0.00138,3834.4,0.03234,0.952
+Northwick Park Hospital HASU,Harrow,HA13UJ,0.00113,5950.2,0.01726,0.95,0.00144,5906.9,0.02192,0.993
+Watford General Hospital,Watford,WD180HB,0.00112,4268.7,0.02379,0.941,0.00139,4268.7,0.02924,0.959
+Musgrove Park Hospital,Taunton,TA15DA,0.00103,2481.7,0.03777,0.866,0.00113,2532.5,0.04012,0.779
+Royal Berkshire Hospital,Reading,RG15AN,0.00097,3485.2,0.02513,0.815,0.00115,3376.7,0.03063,0.793
+University Hospitals Dorset Stroke Service,Bournemouth,BH77DW,0.00097,2106.6,0.0417,0.815,0.0012,2106.6,0.0509,0.828
+Northampton General Hospital,Northampton,NN15BD,0.00094,3295.5,0.02586,0.79,0.0011,3266.7,0.03024,0.759
+Darent Valley Hospital,Dartford,DA28DA,0.00093,2623.4,0.03234,0.782,0.00121,2623.4,0.04133,0.834
+Colchester General Hospital,Colchester,CO45JL,0.0009,1521.1,0.05372,0.756,0.00103,1521.1,0.06045,0.71
+Peterborough City Hospital,Peterborough,PE39GZ,0.00089,1766.5,0.04555,0.748,0.00105,1766.5,0.05327,0.724
+Royal Devon and Exeter Hospital,Exeter,EX25DW,0.00088,2620.3,0.03033,0.739,0.00092,2620.3,0.03147,0.634
+St Peter's Hospital,Chertsey,KT160PZ,0.00088,3665.8,0.02176,0.739,0.00105,3665.8,0.02559,0.724
+Lister Hospital,Stevenage,SG14AB,0.00079,2952.0,0.02432,0.664,0.00096,2952.0,0.0291,0.662
+Milton Keynes General Hospital,Milton Keynes,MK65LD,0.00078,2375.7,0.02995,0.655,0.00087,2375.7,0.03302,0.6
+Dorset County Hospital,Dorchester,DT12JY,0.00078,1066.4,0.06645,0.655,0.00092,1066.4,0.07679,0.634
+Lincoln County Hospital,Lincoln,LN25QY,0.00076,1172.6,0.05889,0.639,0.0009,1172.6,0.06862,0.621
+Queen Alexandra Hospital Portsmouth,Portsmouth,PO63LY,0.00075,2055.1,0.03294,0.63,0.00093,2055.1,0.04037,0.641
+New Cross Hospital,Wolverhampton,WV100QP,0.00072,3029.0,0.02169,0.605,0.00093,3029.0,0.0273,0.641
+Wycombe General Hospital,High Wycombe,HP112TT,0.0007,4321.5,0.01473,0.588,0.00085,4174.7,0.0182,0.586
+Maidstone District General Hospital,Maidstone,ME169QQ,0.00069,1343.7,0.04678,0.58,0.00089,1343.7,0.05904,0.614
+Royal Cornwall Hospital,Truro,TR13LQ,0.00068,833.7,0.07387,0.571,0.00076,833.7,0.08071,0.524
+Princess Royal Hospital Telford,Telford,TF16TF,0.00068,1143.1,0.05422,0.571,0.00085,1143.1,0.06669,0.586
+Russells Hall Hospital,Dudley,DY12HQ,0.00068,3216.7,0.01906,0.571,0.00089,3216.7,0.02478,0.614
+Cheltenham & Gloucester Hospitals,Cheltenham,GL537AN,0.00067,2527.9,0.02423,0.563,0.0008,2503.3,0.02851,0.552
+Epsom Hospital,Epsom,KT187EG,0.00065,2899.9,0.02044,0.546,0.0008,2899.9,0.02475,0.552
+Leicester Royal Infirmary,Leicester,LE15WW,0.00065,1959.2,0.03007,0.546,0.00085,1841.2,0.04126,0.586
+Southend Hospital,Southend,SS00RY,0.00065,2044.4,0.02868,0.546,0.00085,2044.4,0.03687,0.586
+Ipswich Hospital,Ipswich,IP45PD,0.00064,1631.1,0.03586,0.538,0.00069,1631.1,0.03766,0.476
+Basildon University Hospital,Basildon,SS165NL,0.00063,3085.7,0.0186,0.529,0.0008,2862.7,0.02486,0.552
+St Richards Hospital,Chichester,PO196SE,0.00063,1979.6,0.02874,0.529,0.00079,1953.1,0.03614,0.545
+Queen Elizabeth Hospital Kings Lynn,Kings Lynn,PE304ET,0.00062,1638.4,0.03455,0.521,0.00073,1638.4,0.03976,0.503
+Worcestershire Royal Hospital,Worcester,WR51DD,0.00062,2033.2,0.02748,0.521,0.00071,2033.2,0.03103,0.49
+Torbay Hospital,Torbay,TQ27AA,0.00061,2608.4,0.02114,0.513,0.00068,2608.4,0.02305,0.469
+Cumberland Infirmary,Carlisle,CA27HY,0.0006,701.8,0.07705,0.504,0.00067,701.8,0.08444,0.462
+Great Western Hospital Swindon,Swindon,SN36BB,0.00058,2243.0,0.02338,0.487,0.0007,2243.0,0.02764,0.483
+Doncaster Royal Infirmary,Doncaster,DN25LT,0.00057,2236.8,0.02302,0.479,0.00073,2100.5,0.03094,0.503
+Broomfield Hospital,Chelmsford,CM17ET,0.00055,2526.1,0.01958,0.462,0.00064,2431.2,0.02327,0.441
+Midland Metropolitan University Hospital (MMUH) - Acute Stroke Services,Smethwick,B662QT,0.00055,5771.1,0.00873,0.462,0.0007,5684.4,0.01099,0.483
+Kings Mill Hospital,Mansfield,NG174JL,0.00053,2156.1,0.02247,0.445,0.00072,2063.1,0.03084,0.497
+Princess Royal University Hospital HASU,Princess Royal,BR68ND,0.00051,2475.9,0.01865,0.429,0.00064,2458.0,0.02339,0.441
+Hereford County Hospital,Hereford,HR12ER,0.0005,661.9,0.06881,0.42,0.00058,661.9,0.07823,0.4
+Royal United Hospital Bath,Bath,BA13NG,0.0005,1463.7,0.03088,0.42,0.00064,1480.8,0.03841,0.441
+Royal Derby Hospital,Derby,DE223NE,0.00047,1265.6,0.03373,0.395,0.00064,1265.6,0.04482,0.441
+York Hospital,York,YO318HE,0.00047,1032.8,0.04091,0.395,0.00059,1032.8,0.05009,0.407
+East Surrey Hospital,Redhill,RH15RH,0.00047,1425.3,0.02986,0.395,0.00061,1425.3,0.03798,0.421
+Salisbury District Hospital,Salisbury,SP28BJ,0.00045,2095.2,0.0196,0.378,0.00056,1906.9,0.02582,0.386
+Wirral Arrowe Park Hospital,Wirral,CH495PE,0.00044,1138.8,0.03486,0.37,0.00058,1138.8,0.04507,0.4
+North Devon District Hospital,Barnstaple,EX314JB,0.00044,490.1,0.08144,0.37,0.00048,490.1,0.08673,0.331
+Bradford and Airedale SU,Bradford,BD96RJ,0.00043,1602.7,0.02408,0.361,0.00057,1602.7,0.0315,0.393
+Eastbourne District General Hospital,Eastbourne,BN212UD,0.00043,820.3,0.04761,0.361,0.00055,820.3,0.0594,0.379
+Worthing Hospital,Worthing,BN112DH,0.00042,1184.5,0.03226,0.353,0.00053,1184.5,0.03991,0.366
+University Hospital of North Durham,North Durham,DH15TW,0.00042,1355.6,0.0283,0.353,0.00058,1355.6,0.03762,0.4
+West Suffolk Hospital,Bury St Edmunds,IP332QZ,0.00041,1723.7,0.02183,0.345,0.00045,1723.7,0.02301,0.31
+Chesterfield Royal,Chesterfield,S445BL,0.00039,1344.2,0.02625,0.328,0.00053,1344.2,0.03458,0.366
+Fairfield General Hospital,Bury,BL97TD,0.00037,2180.3,0.01537,0.311,0.0005,2180.3,0.02028,0.345
+Royal Blackburn Hospital,Blackburn,BB23HH,0.00037,954.4,0.03493,0.311,0.00051,954.4,0.04648,0.352
+Countess of Chester Hospital,Chester,CH21UL,0.00037,704.5,0.04728,0.311,0.00049,704.5,0.0607,0.338
+Scunthorpe General Hospital,Scunthorpe,DN157BH,0.00036,2212.4,0.01491,0.303,0.00042,1999.5,0.01872,0.29
+Calderdale Royal Hospital,Halifax,HX30PW,0.00035,1368.1,0.02323,0.294,0.00047,1331.2,0.0311,0.324
+Stepping Hill Hospital,Stockport,SK27JE,0.00034,1976.5,0.01566,0.286,0.00046,1976.5,0.02027,0.317
+St Mary's Hospital Newport,Newport,PO305TG,0.00034,304.8,0.10117,0.286,0.00036,304.8,0.10212,0.248
+Royal Hampshire County Hospital,Winchester,SO225DG,0.00033,1507.6,0.01967,0.277,0.00042,1567.0,0.02363,0.29
+Furness General Hospital,Furness,LA144LF,0.00029,345.9,0.07565,0.244,0.00033,345.9,0.0841,0.228
+Royal Lancaster Infirmary,Lancaster,LA14RP,0.00029,746.3,0.03546,0.244,0.00037,746.3,0.04393,0.255
+Leighton Hospital,Crewe,CW14QJ,0.00028,740.2,0.03377,0.235,0.00037,740.2,0.04393,0.255
+Sunderland Royal Hospital,Sunderland,SR47TP,0.00028,1433.7,0.01777,0.235,0.00039,1164.4,0.02902,0.269
+James Paget Hospital,Great Yarmouth,NR316LA,0.00027,576.3,0.04295,0.227,0.00035,576.3,0.05354,0.241
+University Hospitals of North Tees and Hartlepool,Stockton-on-Tees,TS198PE,0.00025,1328.6,0.01721,0.21,0.00035,1328.6,0.0227,0.241
+Pinderfields Hospital,Wakefield,WF14DG,0.00023,1319.8,0.01589,0.193,0.00031,1319.8,0.0206,0.214
+Northumbria Specialist Emergency Care Hospital HASU,Cramlington,NE236NZ,0.00018,763.6,0.02156,0.151,0.00026,763.6,0.02933,0.179
+Blackpool Victoria Hospital,Blackpool,FY38NR,0.00017,561.4,0.02721,0.143,0.00024,561.4,0.03652,0.166
+Whiston Hospital HASU,Prescot,L355DR,7e-05,1623.2,0.00417,0.059,9e-05,1623.2,0.00451,0.062
