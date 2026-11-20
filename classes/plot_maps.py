@@ -32,16 +32,16 @@ def draw_arrow(ax, hospitals_gdf, start_postcode, end_postcode):
         xy=(end.geometry.x, end.geometry.y),
         xytext=(start.geometry.x, start.geometry.y),
         arrowprops={
-            "arrowstyle": "simple",
+            "arrowstyle": "simple, head_width=0.7, head_length=0.7",
             "facecolor": "white",
             "lw": 0.7,
-            "mutation_scale": 30,
+            "mutation_scale": 15,
         },
         zorder=3,
     )
 
     
-def plot_hospitals(ax, hospitals_gdf, show_new_mt=False):
+def plot_hospitals(ax, hospitals_gdf, show_new_mt=False, show_labels=True):
     """Plot hospital markers and labels."""
     ivt_mask = pd.to_numeric(
         hospitals_gdf["Use_IVT"], errors="coerce"
@@ -80,34 +80,54 @@ def plot_hospitals(ax, hospitals_gdf, show_new_mt=False):
             zorder=99,
         )
 
-    ivt_only_mask = ivt_mask & ~mt_mask
-    if show_new_mt:
-        ivt_only_mask &= ~new_mt_mask
-
-    label_groups = [
-        (ivt_only_mask, 10, "black"),
-        (mt_mask, 12, "red"),
-    ]
-    if show_new_mt:
-        label_groups.append((new_mt_mask, 12, "red"))
-
-    for mask, fontsize, color in label_groups:
-        for _, hospital in hospitals_gdf.loc[mask].iterrows():
-            ax.annotate(
-                hospital["Hospital_City"],
-                xy=(hospital.geometry.x, hospital.geometry.y),
-                xytext=(3, 3),
-                textcoords="offset points",
-                fontsize=fontsize,
-                color=color,
-                zorder=100,
-                bbox={
-                    "facecolor": "white",
-                    "edgecolor": "none",
-                    "alpha": 0.8,
-                    "pad": 1,
-                },
-            )
+    if show_labels:
+        ivt_only_mask = ivt_mask & ~mt_mask
+        if show_new_mt:
+            ivt_only_mask &= ~new_mt_mask
+    
+        label_groups = [
+            (ivt_only_mask, 10, "black"),
+            (mt_mask, 12, "red"),
+        ]
+        if show_new_mt:
+            label_groups.append((new_mt_mask, 12, "red"))
+    
+        for mask, fontsize, color in label_groups:
+            for _, hospital in hospitals_gdf.loc[mask].iterrows():
+                if hospital["Hospital_City"] in ['Coventry']:
+                    label_offset = (8, -5)
+                elif hospital["Hospital_City"] in ['Worcester']:
+                    label_offset = (5, -3)
+                elif hospital["Hospital_City"] in ['Birmingham']:
+                    label_offset = (5, 10)
+                # elif hospital["Hospital_City"] in ['Southampton']:
+                #     label_offset = (-48, 5)
+                elif hospital["Hospital_City"] in ['Hereford']:
+                    label_offset = (-48, 5)
+                elif hospital["Hospital_City"] in ['Barnstaple']:
+                    label_offset = (-48, 5)
+                elif hospital["Hospital_City"] in ['Dorchester']:
+                    label_offset = (5, -5)
+                else:
+                    label_offset = (5, 5)
+                    
+                ax.annotate(
+                    hospital["Hospital_City"],
+                    xy=(hospital.geometry.x, hospital.geometry.y),
+                    xytext=label_offset,
+                    textcoords="offset points",
+                    fontsize=fontsize,
+                    color=color,
+                    zorder=100,
+                    bbox={
+                        "facecolor": "white",
+                        "edgecolor": "none",
+                        "alpha": 0.8,
+                        "pad": 1,
+                    },
+                )
+    else:
+        pass
 
     
 def add_basemap(ax):
@@ -150,7 +170,7 @@ def get_bounds(comparison, hospitals_gdf, used_hospitals):
     # Add a small buffer to the limits for better visualization
     buffer = 10000  # metres
     min_lng -= buffer
-    max_lng += buffer * 4
+    max_lng += buffer# * 4
     min_lat -= buffer
     max_lat += buffer
     return min_lng, min_lat, max_lng, max_lat

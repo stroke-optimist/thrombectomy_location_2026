@@ -1,0 +1,9 @@
+column,min,max
+change_in_drip_ship_mt_time,-136.0,0.0
+change_in_drip_ship_mt_travel_time,-76.0,0.0
+change_in_drip_ship_mt_travel_time_with_delay,-136.0,0.0
+change_in_lvo_drip_ship_ivt_mt_mrs_0-2,0.0,0.086
+drip_ship_mt_time,170.0,354.0
+drip_ship_mt_travel_time,0.0,124.0
+drip_ship_mt_travel_time_with_delay,0.0,160.0
+drip_ship_mt_travel_time_with_delay_base,19.0,184.0

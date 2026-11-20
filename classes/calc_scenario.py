@@ -41,12 +41,12 @@ def load_scenario_parameters(p):
     return df_scen_full
 
     
-def load_geo_cohort_data(p, p2):
+def load_geo_cohort_data(p, p2, cols_geo=None, cols_results=None):
     """
     Function to load in cohort outcome and admissions data:"""
     df_base = pd.concat(
-        (pd.read_csv(p, index_col='LSOA'),
-         pd.read_csv(p2, index_col='LSOA')),
+        (pd.read_csv(p, index_col='LSOA', usecols=cols_geo),
+         pd.read_csv(p2, index_col='LSOA', usecols=cols_results)),
         axis='columns'
     )
     return df_base

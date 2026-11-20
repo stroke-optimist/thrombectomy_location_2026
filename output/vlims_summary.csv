@@ -7,5 +7,6 @@ drip_ship_mrs_0-2_improvement_over_no_treatment,0.082,0.139
 drip_ship_mt_time,170.0,362.0
 drip_ship_mt_travel_time,0.0,132.0
 drip_ship_mt_travel_time_with_delay,0.0,192.0
+drip_ship_mt_travel_time_with_delay_base,0.0,192.0
 lvo_drip_ship_ivt_mt_mrs_0-2_improvement_over_no_treatment,0.05,0.172
 nearest_ivt_time_no_bias,0.0,68.0
