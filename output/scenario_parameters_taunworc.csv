@@ -1,5 +1,7 @@
 scenario_name,scenario_geoprocess_name,new_mt_units,mt_travel_bias_minutes
 base,base,[],0.1
 base_bias10min,base_bias10min,[],10.1
+base_bias15min,base_bias15min,[],15.1
 taunworc,taunworc,"['TA15DA', 'WR51DD']",0.1
 taunworc_bias10min,taunworc_bias10min,"['TA15DA', 'WR51DD']",10.1
+taunworc_bias15min,taunworc_bias15min,"['TA15DA', 'WR51DD']",15.1
