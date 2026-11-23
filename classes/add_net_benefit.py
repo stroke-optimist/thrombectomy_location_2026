@@ -9,11 +9,13 @@ from classes.scenario import Scenario
 def calculate_geo_and_outcomes(
         mt_travel_bias,
         new_mt_units,
+        dir_data='data'
     ):
     # Process geographic data (only needed when hospital data changes):
     geo = Geoprocessing(limit_to_england=True,
                         mt_travel_bias=mt_travel_bias,
-                        new_mt_centres=new_mt_units)
+                        new_mt_centres=new_mt_units,
+                        dir_data=dir_data)
     geo.run()
     geodata = geo.combined_data.copy().reset_index()
     

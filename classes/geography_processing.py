@@ -1,7 +1,7 @@
 """
 Processing of raw geographic data for model
 """
-
+import os
 import pandas as pd
 import numpy as np
 
@@ -15,7 +15,8 @@ class Geoprocessing(object):
                  limit_to_england=False,
                  mt_travel_bias=0.1,
                  new_mt_centres=[],
-                 use_extra_travel_checks=True):
+                 use_extra_travel_checks=True,
+                 dir_data='data'):
         """
         Initialise geographic class.
 
@@ -76,6 +77,7 @@ class Geoprocessing(object):
         self.mt_travel_bias = mt_travel_bias
         self.new_mt_centres = new_mt_centres
         self.use_extra_travel_checks = use_extra_travel_checks
+        self.dir_data = dir_data
 
     def run(self):
         """
@@ -328,47 +330,60 @@ class Geoprocessing(object):
         """
         Load raw geographic data.
         """
-        self.hospitals = pd.read_csv(
-            './data/stroke_hospitals_2025.csv')
+        # Set up file names:
+        file_hospitals = 'stroke_hospitals_2025.csv'
+        file_admissions = 'admissions_2025_simple_scaled.csv'
+        file_times_units = 'inter_hospital_pivoted_time.csv'
+        file_times_lsoa = 'pivoted_time.csv'
+        file_distances_units = 'inter_hospital_pivoted_distance.csv'
+        file_distances_lsoa = 'pivoted_distance_km.csv'
+
+        # Hospitals:
+        p = os.path.join(self.dir_data, file_hospitals)
+        self.hospitals = pd.read_csv(p)
         # Make sure hospitals are alphabetical by postcode:
         self.hospitals = self.hospitals.sort_values('Postcode')
-
-        # If there are new MT centres, change the Use_MT column to 1 for those hospitals
+        # If there are new MT centres, change the Use_MT column to 1
+        # for those hospitals:
         if len(self.new_mt_centres) > 0 :
             for new_mt_centre in self.new_mt_centres:
-                self.hospitals.loc[self.hospitals['Postcode'] == new_mt_centre, 'Use_MT'] = 1
-        
+                m = self.hospitals['Postcode'] == new_mt_centre
+                self.hospitals.loc[m, 'Use_MT'] = 1
         if self.limit_to_england:
-            self.hospitals = self.hospitals[self.hospitals['Country'] == 'England']
-
+            m = self.hospitals['Country'] == 'England'
+            self.hospitals = self.hospitals[m]
+        # Record used hospitals for limiting travel matrices:
         used_hospitals = self.hospitals['Postcode'].tolist()
 
-        self.admissions = pd.read_csv(
-            './data/admissions_2025_simple_scaled.csv', index_col='area')
+        # Admissions:
+        p = os.path.join(self.dir_data, file_admissions)
+        self.admissions = pd.read_csv(p, index_col='area')
         self.admissions.sort_index(inplace=True)
-
         if self.limit_to_england:
-            self.admissions = self.admissions[self.admissions['England'] == 1]
-
+            m = self.admissions['England'] == 1
+            self.admissions = self.admissions[m]
+        # Record used LSOA for limiting travel matrices:
         used_lsoas = self.admissions.index.tolist()
 
-        self.inter_hospital_time = pd.read_csv(
-            './data/inter_hospital_pivoted_time.csv', index_col='from_postcode')
-        
-        self.lsoa_travel_time = pd.read_csv(
-            './data/pivoted_time.csv', index_col='LSOA')
-        
+        # Unit times and distance matrices to other units:
+        p = os.path.join(self.dir_data, file_times_units)
+        self.inter_hospital_time = pd.read_csv(p, index_col='from_postcode')
+        p = os.path.join(self.dir_data, file_distances_units)
         self.inter_hospital_distance = pd.read_csv(
-            './data/inter_hospital_pivoted_distance.csv', index_col='from_postcode')
-        
-        self.lsoa_travel_distance = pd.read_csv(
-            './data/pivoted_distance_km.csv', index_col='LSOA')
-        
-        # limit to used LSOAs and hospitals
+            p, index_col='from_postcode')
+        # Limit to used LSOAs and hospitals:
         self.inter_hospital_time = self.inter_hospital_time.loc[
             used_hospitals, used_hospitals]
         self.inter_hospital_distance = self.inter_hospital_distance.loc[
             used_hospitals, used_hospitals]
+
+        # LSOA times and distance matrices to stroke units:
+        p = os.path.join(self.dir_data, file_times_lsoa)
+        self.lsoa_travel_time = pd.read_csv(p, index_col='LSOA')
+        p = os.path.join(self.dir_data, file_distances_lsoa)
+        self.lsoa_travel_distance = pd.read_csv(p, index_col='LSOA')
+        # Limit to used LSOAs.
+        # Hospitals are limited in the geography calculation.
         self.lsoa_travel_time = self.lsoa_travel_time.loc[used_lsoas]
         self.lsoa_travel_distance = self.lsoa_travel_distance.loc[used_lsoas]
 
