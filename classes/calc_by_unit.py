@@ -10,18 +10,23 @@ def gather_unit_combos(results_paths):
                            for s in ['base', 'taunworc']]
     
     # For each file, gather the unique sets of units:
-    list_of_dfs = []
+    dict_of_dfs = {}
     for k, p in results_paths.items():
         df = pd.read_csv(p, usecols=cols_unit_postcodes)
         df_unit_combos = df[cols_unit_postcodes].drop_duplicates(
             ignore_index=True)
         df_unit_combos[k] = 1
-        list_of_dfs.append(df_unit_combos.copy())
+        dict_of_dfs[k] = df_unit_combos.copy()
     
     # Turn unit data into a DataFrame and remove duplicate entries:
-    df_unit_combos = pd.concat(list_of_dfs, axis='rows', ignore_index=True)
-    df_unit_combos = df_unit_combos.drop_duplicates(subset=cols_unit_postcodes,
-                                                    ignore_index=True)
+    df_unit_combos = pd.concat(list(dict_of_dfs.values()), axis='rows',
+                               ignore_index=True)
+    df_unit_combos = df_unit_combos[cols_unit_postcodes].drop_duplicates(
+        ignore_index=True)
+    # Update tracking - was overwritten with drop_duplicates.
+    for k, df in dict_of_dfs.items():
+        df_unit_combos = pd.merge(df_unit_combos, df, on=cols_unit_postcodes,
+                                  how='left')
     # Convert tracking columns to integer:
     df_unit_combos = df_unit_combos.fillna(0).convert_dtypes()
     
