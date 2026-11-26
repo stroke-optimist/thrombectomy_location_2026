@@ -58,6 +58,7 @@ def gather_data(df_base, df_taunworc):
     
     cols_to_gather = [
         'nearest_ivt_unit',
+        'nearest_ivt_time',
         'transfer_unit',
         'transfer_required',
         'drip_ship_mt_time',
